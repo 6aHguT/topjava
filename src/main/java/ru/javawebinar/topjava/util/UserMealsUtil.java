@@ -3,14 +3,18 @@ package ru.javawebinar.topjava.util;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.model.UserMealWithExceed;
 
-import static ru.javawebinar.topjava.util.TimeUtil.isBetween;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static ru.javawebinar.topjava.util.TimeUtil.isBetween;
 
 
 /**
@@ -19,6 +23,7 @@ import java.util.function.Predicate;
  */
 public class UserMealsUtil
 {
+
     public static void main(String[] args)
     {
         List<UserMeal> mealList = Arrays.asList(
@@ -43,44 +48,30 @@ public class UserMealsUtil
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay)
     {
         List<UserMealWithExceed> userMealWithExceedList = new ArrayList<>();
-        ArrayList<UserMeal> mealListTemp = new ArrayList<>();
-        mealListTemp.addAll(mealList);
-        mealListTemp.sort(Comparator.comparing(UserMeal::getDateTime));
-        int indexOfCurrentDay;
-        int caloriesPerDayTemp = 0;
+        mealList.sort(Comparator.comparing(UserMeal::getDateTime));
 
-        for (int i = 0; i < mealListTemp.size(); i++)
+        for (int i = 0; i < mealList.size(); i++)
         {
-            LocalDate day = mealListTemp.get(i).getDateTime().toLocalDate();
-            indexOfCurrentDay = i;
+            int caloriesPerDayTemp = 0;
+            LocalDate day = mealList.get(i).getDateTime().toLocalDate();
+            int indexOfCurrentDay = i;
 
-            while ((indexOfCurrentDay < mealListTemp.size()) && day.equals(mealListTemp.get(indexOfCurrentDay).getDateTime().toLocalDate()))
+            List<UserMealWithExceed> mealsPerDayWithExceed = new ArrayList<>();
+            while ((indexOfCurrentDay < mealList.size()) && day.equals(mealList.get(indexOfCurrentDay).getDateTime().toLocalDate()))
             {
-                caloriesPerDayTemp = caloriesPerDayTemp + mealListTemp.get(indexOfCurrentDay).getCalories();
-                userMealWithExceedList.add(new UserMealWithExceed(mealListTemp.get(indexOfCurrentDay), true));
+                caloriesPerDayTemp = caloriesPerDayTemp + mealList.get(indexOfCurrentDay).getCalories();
+                mealsPerDayWithExceed.add(new UserMealWithExceed(mealList.get(indexOfCurrentDay), true));
                 indexOfCurrentDay++;
             }
 
-            if (caloriesPerDayTemp <= caloriesPerDay)
+            if (caloriesPerDayTemp > caloriesPerDay)
             {
-                while ((indexOfCurrentDay--) > i)
-                {
-                    mealListTemp.remove(indexOfCurrentDay);
-                    userMealWithExceedList.remove(indexOfCurrentDay);
-                }
-                i = indexOfCurrentDay;
-            } else
-            {
-                i = indexOfCurrentDay - 1;
+                userMealWithExceedList.addAll(mealsPerDayWithExceed);
             }
-
-            caloriesPerDayTemp = 0;
+            i = indexOfCurrentDay - 1;
         }
         userMealWithExceedList.removeIf(userMealWithExceed -> (!isBetween(userMealWithExceed.getDateTime().toLocalTime(), startTime, endTime)));
-        /*for (UserMealWithExceed x : userMealWithExceedList)
-        {
-            System.out.println(x.toString());
-        }*/
+        userMealWithExceedList.forEach(System.out::println);
         return userMealWithExceedList;
     }
 }
