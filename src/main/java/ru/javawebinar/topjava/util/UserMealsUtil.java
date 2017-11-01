@@ -60,7 +60,10 @@ public class UserMealsUtil
             while ((indexOfCurrentDay < mealList.size()) && day.equals(mealList.get(indexOfCurrentDay).getDateTime().toLocalDate()))
             {
                 caloriesPerDayTemp = caloriesPerDayTemp + mealList.get(indexOfCurrentDay).getCalories();
-                mealsPerDayWithExceed.add(new UserMealWithExceed(mealList.get(indexOfCurrentDay), true));
+                if (isBetween(mealList.get(indexOfCurrentDay).getDateTime().toLocalTime(), startTime, endTime))
+                {
+                    mealsPerDayWithExceed.add(new UserMealWithExceed(mealList.get(indexOfCurrentDay), true));
+                }
                 indexOfCurrentDay++;
             }
 
@@ -70,7 +73,6 @@ public class UserMealsUtil
             }
             i = indexOfCurrentDay - 1;
         }
-        userMealWithExceedList.removeIf(userMealWithExceed -> (!isBetween(userMealWithExceed.getDateTime().toLocalTime(), startTime, endTime)));
         userMealWithExceedList.forEach(System.out::println);
         return userMealWithExceedList;
     }
