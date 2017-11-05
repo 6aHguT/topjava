@@ -8,19 +8,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 import static ru.javawebinar.topjava.util.TimeUtil.isBetween;
 
-
-/**
- * GKislin
- * 31.05.2015.
- */
 public class UserMealsUtil
 {
 
@@ -41,8 +32,6 @@ public class UserMealsUtil
                 new UserMeal(LocalDateTime.of(2015, Month.APRIL, 29, 20, 0), "Ужин", 510)
         );
         getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
-//        .toLocalDate();
-//        .toLocalTime();
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay)
@@ -73,7 +62,6 @@ public class UserMealsUtil
             }
             i = indexOfCurrentDay - 1;
         }
-        userMealWithExceedList.forEach(System.out::println);
         return userMealWithExceedList;
     }
 }
