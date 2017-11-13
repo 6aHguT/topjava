@@ -12,7 +12,7 @@
 <h2>Meals</h2>
 
 <form action="meals">
-    Calories per day <input type="text" name="calories" value="0"/>
+    Calories per day <input type="text" name="calories"/>
     <input type="submit" value="Отправить">
 </form>
 <br>
@@ -36,8 +36,10 @@
                 <td><c:out value="${meal.calories}"/></td>
                 <td><c:out value="${meal.exceed}"/></td>
                 <td></td>
-                <td><a href="index.html">delete</a></td>
-                <td><a href="index.html">edit</a></td>
+                <form action="meals">
+                <td><input type="submit" name="act" value="delete"/></td>
+                <td><input type="submit" name="act" value="update"/></td>
+                </form>
             </tr>
         </c:if>
         <c:if test="${not meal.exceed}">
@@ -47,8 +49,10 @@
                 <td><c:out value="${meal.calories}"/></td>
                 <td><c:out value="${meal.exceed}"/></td>
                 <td></td>
-                <td><a href="index.html">delete</a></td>
-                <td><a href="index.html">edit</a></td>
+                <form action="meals">
+                    <td><input type="submit" name="act" value="delete"/></td>
+                    <td><input type="submit" name="act" value="update"/></td>
+                </form>
             </tr>
         </c:if>
 

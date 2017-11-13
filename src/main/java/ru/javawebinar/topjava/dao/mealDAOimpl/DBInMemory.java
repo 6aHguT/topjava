@@ -1,8 +1,7 @@
-package ru.javawebinar.topjava.dao;
+package ru.javawebinar.topjava.dao.mealDAOimpl;
 
 import ru.javawebinar.topjava.model.Meal;
 
-import java.security.PrivateKey;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Arrays;
@@ -38,5 +37,10 @@ public class DBInMemory
     public List<Meal> getMeals()
     {
         return meals;
+    }
+
+    public void addMeals(Meal meal)
+    {
+        this.meals.add(meal);
     }
 }
