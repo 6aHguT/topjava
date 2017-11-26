@@ -12,7 +12,7 @@ public abstract class AbstractBaseEntity {
     }
 
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public boolean isNew() {

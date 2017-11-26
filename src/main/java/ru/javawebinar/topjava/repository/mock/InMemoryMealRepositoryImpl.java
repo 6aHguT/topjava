@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static ru.javawebinar.topjava.repository.mock.InMemoryUserRepositoryImpl.ADMIN_ID;
 import static ru.javawebinar.topjava.repository.mock.InMemoryUserRepositoryImpl.USER_ID;
 
 @Repository
@@ -29,8 +30,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     {
         MealsUtil.MEALS.forEach(u -> save(u, USER_ID));
-        //this.save(new Meal(LocalDateTime.of(2015, Month.MAY, 29, 10, 0), "Завтрак", 500), 2);
-        //this.save(new Meal(LocalDateTime.of(2015, Month.MAY, 29, 14, 0), "Обед", 1800), 2);
+        this.save(new Meal(LocalDateTime.of(2015, Month.MAY, 29, 10, 0), "Завтрак", 500), ADMIN_ID);
+        this.save(new Meal(LocalDateTime.of(2015, Month.MAY, 29, 14, 0), "Обед", 1800), ADMIN_ID);
         //repository.keySet().forEach(System.out::println);
     }
 
@@ -38,15 +39,14 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public Meal save(Meal meal, int userId) {
         log.info("save {}", meal);
-
+        Map<Integer, Meal> meals = repository.computeIfAbsent(userId, ConcurrentHashMap::new);
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
-        } else if (get(meal.getId(), userId) == null) {
-            return null;
+            meals.put(meal.getId(), meal);
+            return meal;
         }
+        return meals.computeIfPresent(meal.getId(), (id, oldMeal) -> meal);
 
-        Map<Integer, Meal> meals = repository.computeIfAbsent(userId, ConcurrentHashMap::new);
-        return meals.put(meal.getId(), meal);
     }
 
     @Override
