@@ -1,6 +1,10 @@
 package ru.javawebinar.topjava;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Profiles {
+    private static final Logger log = LoggerFactory.getLogger(Profiles.class);
     public static final String
             JDBC = "jdbc",
             JPA = "jpa",
