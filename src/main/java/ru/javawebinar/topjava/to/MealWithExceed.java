@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.to;
 
+import org.hibernate.Hibernate;
+
 import java.time.LocalDateTime;
 
 public class MealWithExceed {
@@ -50,5 +52,22 @@ public class MealWithExceed {
                 ", calories=" + calories +
                 ", exceed=" + exceed +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) {
+            return false;
+        }
+        MealWithExceed that = (MealWithExceed) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id;
     }
 }
