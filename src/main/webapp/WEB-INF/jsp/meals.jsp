@@ -12,9 +12,8 @@
 <div class="jumbotron">
     <div class="container">
         <h3><spring:message code="meal.title"/></h3>
-
         <div class="row">
-            <div class="col-sm-7">
+            <div class="col-sm-9">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form class="form-horizontal" id="filter">
@@ -23,14 +22,15 @@
                                         code="meal.startDate"/>:</label>
 
                                 <div class="col-sm-4">
-                                    <input class="form-control" type="date" name="startDate" id="startDate">
+                                    <input class="form-control" name="startDate" id="startDate"/>
+
                                 </div>
 
-                                <label class="control-label col-sm-3" for="startTime"><spring:message
-                                        code="meal.startTime"/>:</label>
+                                <label class="control-label col-sm-2" for="startTime"><spring:message
+                                    code="meal.startTime"/>:</label>
 
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="time" name="startTime" id="startTime">
+                                    <input class="form-control" name="startTime" id="startTime"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -38,14 +38,14 @@
                                         code="meal.endDate"/>:</label>
 
                                 <div class="col-sm-4">
-                                    <input class="form-control" type="date" name="endDate" id="endDate">
+                                    <input class="form-control" name="endDate" id="endDate"/>
                                 </div>
 
-                                <label class="control-label col-sm-3" for="endTime"><spring:message
+                                <label class="control-label col-sm-2" for="endTime"><spring:message
                                         code="meal.endTime"/>:</label>
 
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="time" name="endTime" id="endTime">
+                                    <input class="form-control" name="endTime" id="endTime"/>
                                 </div>
                             </div>
                         </form>
@@ -75,23 +75,6 @@
                 <th></th>
             </tr>
             </thead>
-            <c:forEach items="${meals}" var="meal">
-                <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
-                <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
-                    <td>
-                            <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
-                            <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
-                            <%--${fn:replace(meal.dateTime, 'T', ' ')}--%>
-                            ${fn:formatDateTime(meal.dateTime)}
-                    </td>
-                    <td>${meal.description}</td>
-                    <td>${meal.calories}</td>
-                    <td><a><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-                    <td><a onclick="deleteRow(${meal.id})">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </a></td>
-                </tr>
-            </c:forEach>
         </table>
     </div>
 </div>
@@ -112,7 +95,7 @@
                                 code="meal.dateTime"/></label>
 
                         <div class="col-xs-9">
-                            <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
+                            <input type="text" class="form-control" id="dateTime" name="dateTime"
                                    placeholder="<spring:message code="meal.dateTime"/>">
                         </div>
                     </div>
@@ -147,4 +130,9 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
+<jsp:include page="fragments/i18n.jsp"/>
+<script type="text/javascript">
+    i18n["addTitle"] = '<spring:message code="meal.add"/>';
+    i18n["editTitle"] = '<spring:message code="meal.edit"/>';
+</script>
 </html>

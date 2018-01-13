@@ -1,17 +1,22 @@
 package ru.javawebinar.topjava.to;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class MealWithExceed extends BaseTo {
+public class MealWithExceed extends BaseTo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    private final LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
-    private final String description;
+    private String description;
 
-    private final int calories;
+    private int calories;
 
-    private final boolean exceed;
+    private boolean exceed;
+
+    public MealWithExceed() {
+    }
 
     public MealWithExceed(Integer id, LocalDateTime dateTime, String description, int calories, boolean exceed) {
         super(id);
@@ -20,6 +25,19 @@ public class MealWithExceed extends BaseTo {
         this.calories = calories;
         this.exceed = exceed;
     }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
 
     public LocalDateTime getDateTime() {
         return dateTime;

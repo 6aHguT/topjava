@@ -44,7 +44,8 @@
         <!--webjars-->
         <webjars-bootstrap.version>3.3.7-1</webjars-bootstrap.version>
         <webjars-jquery.version>3.2.1</webjars-jquery.version>
-        <webjars-datetimepicker.version>2.5.11</webjars-datetimepicker.version>
+        <!--<webjars-datetimepicker.version>2.5.11</webjars-datetimepicker.version>-->
+        <webjars-datetimepicker.version>4.17.47</webjars-datetimepicker.version>
         <webjars-noty.version>3.1.0</webjars-noty.version>
         <webjars-datatables.version>1.10.16</webjars-datatables.version>
     </properties>
@@ -274,7 +275,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>datetimepicker</artifactId>
             <version>${webjars-datetimepicker.version}</version>
@@ -284,7 +285,19 @@
                     <artifactId>jquery</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>eonasdan-bootstrap-datetimepicker</artifactId>
+            <version>${webjars-datetimepicker.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
+    </dependency>
+
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>noty</artifactId>
